@@ -19,8 +19,10 @@ let iModal = {
         return this.cachedGoto(route);
     },
     showModal: function (config) {
-        // Save the original goto function before it's unavailable
-        iModal.cachedGoto = iModal.constants.dashHook.props.navigationToPageByRelativeUrl;
+        if (iModal.cachedGoto === null) {
+            // Save the original goto function before it's unavailable
+            iModal.cachedGoto = iModal.constants.dashHook.props.navigationToPageByRelativeUrl;
+        }
 
         function handleMutation(mutationsList, observer) {
             for (const mutation of mutationsList) {
