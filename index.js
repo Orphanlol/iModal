@@ -1,12 +1,14 @@
 let iModal = {
     constants: {
         container: "presentation",
-        headerClass: "css-19hcsz9-Typography enj526p0",
-        descriptionClass: "css-1ql0wvf-Typography enj526p0",
+        headerClass: "css-19hcsz9-Typography",
+        descriptionClass: "css-1ql0wvf-Typography",
         errorRoute: "/student/error/modal",
         dashRoute: "/student/dashboard/home",
         buttonId: "continue-button-button",
         dashId : "StudentDashboard-g38",
+        cardClass : "e1vvjwpf1-card-body",
+
         get dashHook() {
             return Object.values(document.getElementById(this.dashId))[1].children[0]._owner.stateNode;
         },
@@ -29,14 +31,24 @@ let iModal = {
                 if (mutation.type === 'childList') {
                     mutation.addedNodes.forEach(node => {
                         if (node.role === iModal.constants.container && document.getElementById(iModal.constants.dashId) === null) {
+                            let card = document.getElementsByClassName(iModal.constants.cardClass)[0];
                             let header = document.getElementsByClassName(iModal.constants.headerClass)[0];
                             let desc = document.getElementsByClassName(iModal.constants.descriptionClass)[0];
                             let button = document.getElementById(iModal.constants.buttonId);
 
+                            if (config.width) {
+                                card.style.width = config.width
+                            }
+                            
                             // Check if useInnerHTML is true, then use innerHTML, else use textContent
                             header[config.useInnerHTML ? 'innerHTML' : 'textContent'] = config.title;
                             desc[config.useInnerHTML ? 'innerHTML' : 'textContent'] = config.description;
-                            button.onclick = config.callback;
+
+                            if (config.callback) {
+                                button.onclick = config.callback;
+                            } else {
+                                button.onclick = iModal.closeModal
+                            }
                         }
                     });
                 }
