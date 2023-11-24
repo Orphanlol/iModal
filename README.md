@@ -8,6 +8,7 @@ iModal.showModal({
     "useInnerHTML": false,
     "title" : "Welcome!",
     "description" : "This is a demo of iModal.",
+    "width" : "610px",
     "callback" : iModal.closeModal,
 });
 ```
